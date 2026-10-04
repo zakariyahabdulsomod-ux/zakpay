@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZakPay – Simple, Secure Payments for Everyone</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--bg2:#F1F5FF;--card:#fff;--tx:#0B1630;--mu:#55627F;--bd:#E1E8F7;--bl:#2F5BFF;--bl2:#1B3FD1;--nv:#0B1630;--gn:#12A37F;--rd:#E5484D;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1226;--bg2:#0E1933;--card:#12203F;--tx:#EAF0FF;--mu:#9AA8C7;--bd:#22345C;--bl:#5B82FF}}
+:root[data-theme="dark"]{--bg:#0A1226;--bg2:#0E1933;--card:#12203F;--tx:#EAF0FF;--mu:#9AA8C7;--bd:#22345C;--bl:#5B82FF}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 16px/1.6 'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{line-height:1.12;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(2.2rem,6vw,4rem);font-weight:800}
+h2{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800}
+h3{font-size:1.1rem;font-weight:700;letter-spacing:0}
+p{margin:0}
+.w{max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding:80px 0}
+.ic{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 28px;border-radius:14px;border:1.5px solid transparent;font:700 1rem inherit;font-family:inherit;cursor:pointer;transition:transform .15s,background .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.b1{background:var(--bl);color:#fff;box-shadow:0 8px 24px -8px var(--bl)}.b1:hover{background:var(--bl2)}
+.b2{border-color:rgba(255,255,255,.35);color:#fff}.b2:hover{background:rgba(255,255,255,.1)}
+.b3{border-color:var(--bd);color:var(--tx);background:var(--card)}
+:focus-visible{outline:3px solid #8FB0FF;outline-offset:2px}
+/* nav */
+header{position:sticky;top:0;z-index:20;background:rgba(11,22,48,.92);backdrop-filter:blur(12px);color:#fff;padding-top:env(safe-area-inset-top,0px)}
+.nv{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem}
+.lm{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#5B82FF,#2F5BFF);display:grid;place-items:center}
+.lm svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.links{display:flex;gap:26px;align-items:center;font-weight:500;font-size:.95rem}
+.links a:not(.btn){opacity:.8;transition:opacity .2s}.links a:not(.btn):hover{opacity:1}
+.links .btn{min-height:42px;padding:0 18px;font-size:.9rem}
+.menu{display:none;background:none;border:0;color:#fff;width:48px;height:48px;cursor:pointer}
+@media(max-width:860px){.menu{display:grid;place-items:center}.links{position:absolute;left:0;right:0;top:100%;background:#0B1630;flex-direction:column;align-items:stretch;padding:12px 20px 24px;gap:4px;display:none}.links.open{display:flex}.links a{padding:12px 0}.links .btn{margin-top:8px}}
+/* hero */
+.hero{background:radial-gradient(900px 500px at 85% 20%,#1D3A9E 0%,transparent 60%),var(--nv);color:#fff;padding:64px 0 90px;overflow:hidden}
+.hg{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero p.lead{font-size:1.15rem;color:#B9C6E8;margin:22px 0 32px;max-width:520px}
+.bt{display:flex;gap:14px;flex-wrap:wrap}
+.tag{margin-top:28px;color:#9AA8C7;font-size:.95rem}
+.ph{width:290px;margin:0 auto;border-radius:42px;background:#050B1A;padding:11px;box-shadow:0 40px 80px -20px rgba(0,0,0,.6),0 0 0 2px #26365F;animation:fl 6s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-12px)}}
+.sc{background:#F4F7FF;border-radius:32px;padding:22px 16px;color:#0B1630;min-height:480px}
+.sc small{color:#55627F}
+.bal{background:linear-gradient(135deg,#2F5BFF,#1B3FD1);color:#fff;border-radius:20px;padding:18px;margin:12px 0}
+.bal b{display:block;font-size:1.9rem;letter-spacing:-.03em}
+.qa{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;text-align:center;font-size:.7rem;font-weight:700}
+.qa span{display:grid;gap:4px;justify-items:center}
+.qa i{width:42px;height:42px;border-radius:14px;background:#fff;display:grid;place-items:center;color:#2F5BFF}
+.tx{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:10px;margin-top:8px;font-size:.82rem}
+.tx .av{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:#E8EEFF;color:#2F5BFF;flex:none}
+.tx div{flex:1;min-width:0}.tx b{display:block}.tx em{font-style:normal;color:#55627F;font-size:.72rem}
+.tx .am{flex:none;font-weight:800}.in{color:#12A37F}
+@media(max-width:860px){.hg{grid-template-columns:1fr}.hero{padding-top:40px}}
+/* features */
+.hd{max-width:640px;margin-bottom:44px}
+.hd p{color:var(--mu);margin-top:14px;font-size:1.05rem}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.fc{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:26px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.fc:hover{transform:translateY(-5px);border-color:var(--bl);box-shadow:0 18px 40px -22px var(--bl)}
+.fi{width:50px;height:50px;border-radius:14px;background:var(--bg2);color:var(--bl);display:grid;place-items:center;margin-bottom:18px}
+.fc p{color:var(--mu);font-size:.95rem;margin-top:8px}
+.alt{background:var(--bg2)}
+/* steps */
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:s}
+.sp{position:relative;padding-top:20px;border-top:3px solid var(--bl)}
+.sp::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--bl);color:#fff;font-weight:800;margin:-43px 0 18px}
+.sp p{color:var(--mu);margin-top:8px}
+@media(max-width:760px){.st{grid-template-columns:1fr;gap:40px}}
+/* security */
+.sec{background:var(--nv);color:#fff}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.sec .hd p{color:#B9C6E8}
+.sl{display:grid;gap:14px}
+.si{display:flex;gap:16px;padding:20px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);transition:background .2s}
+.si:hover{background:rgba(255,255,255,.1)}
+.si .ic{color:#7FA0FF;width:28px;height:28px}
+.si p{color:#B9C6E8;font-size:.92rem;margin-top:4px}
+.note{font-size:.82rem;color:#8392B8;margin-top:16px}
+@media(max-width:860px){.sg{grid-template-columns:1fr}}
+/* dashboard */
+.db{background:var(--card);border:1px solid var(--bd);border-radius:26px;padding:22px;display:grid;grid-template-columns:1fr 1.2fr;gap:24px;box-shadow:0 30px 60px -40px #2F5BFF}
+.demo{display:inline-block;font-size:.75rem;font-weight:700;background:#FFF3C4;color:#7A5A00;border-radius:99px;padding:3px 10px;margin-bottom:12px}
+.dbal{background:linear-gradient(135deg,#2F5BFF,#17348F);color:#fff;border-radius:22px;padding:24px}
+.dbal b{display:block;font-size:2.4rem;letter-spacing:-.03em;line-height:1.2;margin:4px 0 0}
+.da{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.da button{background:var(--bg2);border:0;border-radius:16px;padding:14px 4px;color:var(--tx);font:700 .8rem inherit;font-family:inherit;display:grid;gap:6px;justify-items:center;cursor:pointer;transition:transform .15s,background .2s}
+.da button:hover{transform:translateY(-3px);background:var(--bl);color:#fff}
+.tb{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.tb button{border:1px solid var(--bd);background:none;color:var(--mu);border-radius:99px;padding:8px 16px;font:600 .85rem inherit;font-family:inherit;cursor:pointer;min-height:40px}
+.tb button[aria-pressed=true]{background:var(--bl);border-color:var(--bl);color:#fff}
+#hist .tx{background:var(--bg2);font-size:.92rem;animation:pop .4s}
+@keyframes pop{from{opacity:0;transform:translateY(-8px)}}
+#hist .av{background:var(--card)}
+#hist .tx em{color:var(--mu)}
+@media(max-width:860px){.db{grid-template-columns:1fr}}
+/* about + testimonials */
+.ab{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.ab p{color:var(--mu);margin-top:16px}
+.nm{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.nm div{background:var(--bg2);border-radius:18px;padding:20px 12px;text-align:center;font-weight:700;font-size:.9rem}
+.nm .ic{width:30px;height:30px;color:var(--bl);margin-bottom:6px}
+@media(max-width:860px){.ab{grid-template-columns:1fr}}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.tm{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:20px;justify-content:space-between}
+.pr{display:flex;gap:12px;align-items:center}
+.pa{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800}
+.pr small{display:block;color:var(--mu)}
+/* faq */
+details{border-bottom:1px solid var(--bd);padding:4px 0}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center;min-height:56px;font-weight:700}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';font-size:1.5rem;color:var(--bl);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--mu);padding:0 0 18px;max-width:680px}
+/* cta/footer */
+.cta{background:linear-gradient(135deg,#2F5BFF,#14308A);color:#fff;border-radius:28px;padding:56px 28px;text-align:center}
+.cta p{margin:14px 0 28px;color:#D5DFFF}
+.cta .btn{background:#fff;color:#14308A}
+footer{background:var(--nv);color:#B9C6E8;padding:56px 0 calc(32px + env(safe-area-inset-bottom,0px))}
+.fg2{display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px}
+.fl{display:flex;flex-wrap:wrap;gap:12px 28px}
+.fl a:hover{color:#fff}
+.so{display:flex;gap:10px}
+.so a{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.08);display:grid;place-items:center;transition:background .2s}
+.so a:hover{background:var(--bl)}
+.cp{border-top:1px solid rgba(255,255,255,.1);margin-top:32px;padding-top:20px;font-size:.85rem}
+/* dialog */
+dialog{border:0;border-radius:24px;padding:26px;width:min(440px,calc(100vw - 24px));background:var(--card);color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.4)}
+dialog::backdrop{background:rgba(5,11,26,.65);backdrop-filter:blur(3px)}
+dialog[open]{animation:pop .25s}
+label{display:block;font-weight:600;font-size:.88rem;margin:14px 0 6px}
+input,select{width:100%;min-height:50px;border-radius:12px;border:1.5px solid var(--bd);background:var(--bg);color:var(--tx);padding:0 14px;font:inherit}
+input:focus,select:focus{border-color:var(--bl);outline:0;box-shadow:0 0 0 3px rgba(47,91,255,.25)}
+.er{color:var(--rd);font-size:.85rem;min-height:1.3em;margin-top:8px}
+.dh{display:flex;justify-content:space-between;align-items:center}
+.x{background:none;border:0;color:var(--mu);width:44px;height:44px;font-size:1.6rem;cursor:pointer}
+dialog .btn{width:100%;margin-top:14px}
+.rc{background:var(--bg2);border-radius:14px;padding:16px;margin-top:12px;font-weight:700;text-align:center;word-break:break-all}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,120px);background:var(--nv);color:#fff;padding:14px 22px;border-radius:14px;z-index:50;transition:transform .3s;max-width:90vw;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+#toast.on{transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="send" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></symbol>
+<symbol id="recv" viewBox="0 0 24 24"><path d="M12 3v13m0 0-5-5m5 5 5-5M4 21h16"/></symbol>
+<symbol id="bill" viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2zM9 7h6M9 11h6M9 15h3"/></symbol>
+<symbol id="phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+<symbol id="lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+<symbol id="list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+<symbol id="wallet" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13v4M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2zM16 14h.01"/></symbol>
+<symbol id="bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4"/></symbol>
+<symbol id="shield" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5zM9 12l2 2 4-4"/></symbol>
+<symbol id="eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9m-3 3 3 3"/></symbol>
+<symbol id="db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+<symbol id="zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></symbol>
+<symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-7 7-7s7 3 7 7M17 4a4 4 0 0 1 0 8M22 21c0-3-2-5-4-6"/></symbol>
+<symbol id="fb" viewBox="0 0 24 24"><path d="M15 3h-2a4 4 0 0 0-4 4v3H6v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2z"/></symbol>
+<symbol id="ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
+<symbol id="xx" viewBox="0 0 24 24"><path d="m4 4 16 16M20 4 4 20"/></symbol>
+<symbol id="in" viewBox="0 0 24 24"><path d="M6 9v11M6 4h.01M11 20v-7a4 4 0 0 1 8 0v7M11 9v11"/></symbol>
+<symbol id="menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+</svg>
+
+<header>
+<div class="w nv">
+<a href="#top" class="logo"><span class="lm"><svg viewBox="0 0 24 24"><path d="M6 6h12L6 18h12"/></svg></span>ZakPay</a>
+<button class="menu" id="mb" aria-label="Open menu" aria-expanded="false"><svg class="ic"><use href="#menu"/></svg></button>
+<nav class="links" id="nav">
+<a href="#features">Features</a><a href="#how">How it works</a><a href="#security">Security</a><a href="#dashboard">Demo</a><a href="#faq">FAQ</a>
+<a href="#" class="btn b2" data-auth="in">Sign In</a><a href="#" class="btn b1" data-auth="up">Get Started</a>
+</nav>
+</div>
+</header>
+
+<main id="top">
+<section class="hero">
+<div class="w hg">
+<div>
+<h1>Send, Receive &amp; Manage Your Money with ZakPay.</h1>
+<p class="lead">Fast, simple and secure digital payments designed to make everyday transactions easier.</p>
+<div class="bt"><a href="#" class="btn b1" data-auth="up">Get Started</a><a href="#" class="btn b2" data-auth="in">Sign In</a></div>
+<p class="tag">Simple, Secure Payments for Everyone.</p>
+</div>
+<div class="ph" aria-label="ZakPay app preview"><div class="sc">
+<small>Good morning,</small> <b>Amina</b>
+<div class="bal"><small style="color:#C9D5FF">Wallet balance</small><b>₦248,550.00</b></div>
+<div class="qa"><span><i><svg class="ic"><use href="#send"/></svg></i>Send</span><span><i><svg class="ic"><use href="#recv"/></svg></i>Receive</span><span><i><svg class="ic"><use href="#phone"/></svg></i>Airtime</span><span><i><svg class="ic"><use href="#bill"/></svg></i>Bills</span></div>
+<b style="font-size:.85rem">Recent</b>
+<div class="tx"><span class="av"><svg class="ic"><use href="#recv"/></svg></span><div><b>From Daniel O.</b><em>Today, 9:14</em></div><span class="am in">+₦12,000.00</span></div>
+<div class="tx"><span class="av"><svg class="ic"><use href="#bill"/></svg></span><div><b>Electricity</b><em>Yesterday</em></div><span class="am">-₦4,500.00</span></div>
+<div class="tx"><span class="av"><svg class="ic"><use href="#phone"/></svg></span><div><b>Airtime</b><em>Mon</em></div><span class="am">-₦1,000.00</span></div>
+</div></div>
+</div>
+</section>
+
+<section id="features"><div class="w">
+<div class="hd"><h2>Everything you need to move money</h2><p>One wallet for sending, paying and keeping track of every transaction.</p></div>
+<div class="fg" id="fgrid"></div>
+</div></section>
+
+<section id="how" class="alt"><div class="w">
+<div class="hd"><h2>Up and running in three steps</h2></div>
+<div class="st">
+<div class="sp"><h3>Create Your Account</h3><p>Sign up with your email and set a secure password in under a minute.</p></div>
+<div class="sp"><h3>Add Money</h3><p>Top up your ZakPay wallet so your balance is ready when you need it.</p></div>
+<div class="sp"><h3>Send, Receive or Pay</h3><p>Send to friends, get paid, buy airtime or settle bills from one place.</p></div>
+</div></div></section>
+
+<section id="security" class="sec"><div class="w sg">
+<div class="hd" style="margin:0"><h2>Your Money. Your Security. Our Priority.</h2><p>ZakPay is built around protecting your account and every payment you make.</p><p class="note">Security features shown here describe our design goals. This demo makes no claims about certifications or regulatory approvals.</p></div>
+<div class="sl">
+<div class="si"><svg class="ic"><use href="#key"/></svg><div><h3>Secure authentication</h3><p>Password protection with extra verification steps at sign-in.</p></div></div>
+<div class="si"><svg class="ic"><use href="#shield"/></svg><div><h3>Transaction protection</h3><p>Confirm every payment before it goes out.</p></div></div>
+<div class="si"><svg class="ic"><use href="#db"/></svg><div><h3>Encrypted data</h3><p>Your personal and payment details are encrypted.</p></div></div>
+<div class="si"><svg class="ic"><use href="#eye"/></svg><div><h3>Fraud monitoring</h3><p>Unusual activity is flagged so it can be reviewed quickly.</p></div></div>
+</div></div></section>
+
+<section id="dashboard"><div class="w">
+<div class="hd"><h2>Try the dashboard</h2><p>Tap an action to make a payment. Everything here runs in your browser with sample data.</p></div>
+<div class="db">
+<div>
+<span class="demo">Demo only. No real money moves.</span>
+<div class="dbal"><small style="color:#C9D5FF">Wallet balance</small><b id="bal">₦248,550.00</b></div>
+<div class="da">
+<button data-act="send"><svg class="ic"><use href="#send"/></svg>Send</button>
+<button data-act="recv"><svg class="ic"><use href="#recv"/></svg>Receive</button>
+<button data-act="air"><svg class="ic"><use href="#phone"/></svg>Airtime</button>
+<button data-act="bill"><svg class="ic"><use href="#bill"/></svg>Bills</button>
+</div>
+</div>
+<div>
+<h3 style="margin-bottom:12px">Transaction history</h3>
+<div class="tb" role="group" aria-label="Filter transactions"><button aria-pressed="true" data-f="all">All</button><button aria-pressed="false" data-f="in">Received</button><button aria-pressed="false" data-f="out">Spent</button></div>
+<div id="hist" aria-live="polite"></div>
+</div>
+</div>
+</div></section>
+
+<section id="about" class="alt"><div class="w ab">
+<div><h2>Payments that feel effortless</h2><p>ZakPay is designed to make digital payments convenient, fast and accessible. Whether you are paying a friend, topping up airtime or settling a bill, everything lives in one clear, easy-to-use wallet.</p><p>We keep the experience simple so anyone can use it, on any phone, from day one.</p></div>
+<div class="nm"><div><svg class="ic"><use href="#zap"/></svg><br>Fast</div><div><svg class="ic"><use href="#users"/></svg><br>Accessible</div><div><svg class="ic"><use href="#shield"/></svg><br>Secure</div></div>
+</div></section>
+
+<section><div class="w">
+<div class="hd"><h2>People like using ZakPay</h2><p>Sample testimonials for demonstration purposes.</p></div>
+<div class="tg">
+<div class="tm"><p>“I paid my electricity bill from my sofa in under a minute. It's the easiest payment app I've used.”</p><div class="pr"><span class="pa" style="background:#2F5BFF">AB</span><div><b>Amara Bello</b><small>Teacher</small></div></div></div>
+<div class="tm"><p>“Sending money to my family is quick, and the instant notification makes it feel certain.”</p><div class="pr"><span class="pa" style="background:#12A37F">DO</span><div><b>Daniel Okoye</b><small>Software engineer</small></div></div></div>
+<div class="tm"><p>“I run a small shop and tracking payments in the history tab saves me hours every week.”</p><div class="pr"><span class="pa" style="background:#7C4DFF">FM</span><div><b>Fatima Musa</b><small>Shop owner</small></div></div></div>
+</div></div></section>
+
+<section id="faq" class="alt"><div class="w" style="max-width:780px">
+<div class="hd"><h2>Frequently asked questions</h2></div>
+<details><summary>What is ZakPay?</summary><p>ZakPay is a digital wallet for sending and receiving money, paying bills and buying airtime and data.</p></details>
+<details><summary>How do I create an account?</summary><p>Select Get Started, enter your name, email and a password, then follow the prompts.</p></details>
+<details><summary>How can I send money?</summary><p>Open Send Money, enter the recipient and amount, review the details and confirm.</p></details>
+<details><summary>Is ZakPay secure?</summary><p>ZakPay uses secure sign-in, transaction confirmation, encrypted data and fraud monitoring to help protect your account.</p></details>
+<details><summary>Can I pay bills with ZakPay?</summary><p>Yes. Choose Bills, pick a category, enter your account number and amount.</p></details>
+<details><summary>How do I contact support?</summary><p>Email support@zakpay.example or use the Contact link below. This is a placeholder address for the demo.</p></details>
+</div></section>
+
+<section><div class="w"><div class="cta"><h2>Get Started with ZakPay</h2><p>Join in minutes and make everyday payments simple.</p><a href="#" class="btn" data-auth="up">Create your account</a></div></div></section>
+</main>
+
+<footer id="contact"><div class="w">
+<div class="fg2">
+<div><a href="#top" class="logo" style="color:#fff"><span class="lm"><svg viewBox="0 0 24 24"><path d="M6 6h12L6 18h12"/></svg></span>ZakPay</a><p style="margin-top:12px;max-width:280px">Simple, Secure Payments for Everyone.</p></div>
+<nav class="fl" aria-label="Footer"><a href="#about">About</a><a href="#features">Features</a><a href="#security">Security</a><a href="#faq">FAQ</a><a href="mailto:support@zakpay.example">Contact</a><a href="#" data-toast="Privacy Policy is a placeholder in this demo.">Privacy Policy</a><a href="#" data-toast="Terms &amp; Conditions are a placeholder in this demo.">Terms &amp; Conditions</a></nav>
+<div class="so"><a href="#" aria-label="Facebook" data-toast="Demo link"><svg class="ic"><use href="#fb"/></svg></a><a href="#" aria-label="Instagram" data-toast="Demo link"><svg class="ic"><use href="#ig"/></svg></a><a href="#" aria-label="X" data-toast="Demo link"><svg class="ic"><use href="#xx"/></svg></a><a href="#" aria-label="LinkedIn" data-toast="Demo link"><svg class="ic"><use href="#in"/></svg></a></div>
+</div>
+<p class="cp">© 2026 ZakPay. Demo website with placeholder content. No real transactions are processed.</p>
+</div></footer>
+
+<dialog id="dlg"><div class="dh"><h3 id="dt"></h3><button class="x" aria-label="Close" id="dx">×</button></div>
+<form id="df" novalidate><div id="dbody"></div><p class="er" id="er" role="alert"></p><button class="btn b1" id="ds" type="submit"></button></form>
+<p style="font-size:.78rem;color:var(--mu);margin-top:12px">Demo only. No real money or accounts are used.</p></dialog>
+<div id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const ico=n=>`<svg class="ic"><use href="#${n}"/></svg>`;
+const F=[["send","Send Money","Transfer to anyone in seconds with a few taps."],["recv","Receive Money","Get paid easily and see funds land in your wallet."],["bill","Pay Bills","Settle electricity, water, TV and internet from one place."],["phone","Buy Airtime & Data","Top up any number instantly, for you or someone else."],["lock","Secure Payments","Every payment is confirmed and protected."],["list","Transaction History","Search and filter all your past activity."],["wallet","Wallet Management","Add money and keep an eye on your balance."],["bell","Instant Notifications","Know the moment money moves."]];
+$("#fgrid").innerHTML=F.map(f=>`<div class="fc"><div class="fi">${ico(f[0])}</div><h3>${f[1]}</h3><p>${f[2]}</p></div>`).join("");
+let bal=248550,fl="all";
+let tx=[["recv","From Daniel Okoye","Today, 9:14",12000],["bill","Electricity bill","Yesterday",-4500],["phone","MTN airtime","Mon",-1000],["send","To Amara Bello","Sun",-6000],["recv","From Fatima Musa","Sat",25000]];
+const m=n=>(n<0?"-":"+")+"₦"+Math.abs(n).toLocaleString("en-US",{minimumFractionDigits:2});
+function draw(){$("#bal").textContent="₦"+bal.toLocaleString("en-US",{minimumFractionDigits:2});
+const l=tx.filter(t=>fl=="all"||(fl=="in"?t[3]>0:t[3]<0));
+$("#hist").innerHTML=l.length?l.map(t=>`<div class="tx"><span class="av">${ico(t[0])}</span><div><b>${t[1]}</b><em>${t[2]}</em></div><span class="am ${t[3]>0?"in":""}">${m(t[3])}</span></div>`).join(""):"<p style='color:var(--mu)'>No transactions yet. Make a payment to see it here.</p>"}
+$$("[data-f]").forEach(b=>b.onclick=()=>{fl=b.dataset.f;$$("[data-f]").forEach(x=>x.setAttribute("aria-pressed",x==b));draw()});
+let tt;function toast(s){const t=$("#toast");t.textContent=s;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2800)}
+$$("[data-toast]").forEach(a=>a.onclick=e=>{e.preventDefault();toast(a.dataset.toast)});
+$("#mb").onclick=()=>{const o=$("#nav").classList.toggle("open");$("#mb").setAttribute("aria-expanded",o)};
+$$("#nav a").forEach(a=>a.addEventListener("click",()=>{$("#nav").classList.remove("open");$("#mb").setAttribute("aria-expanded",false)}));
+const fld=(l,id,t="text",p="")=>`<label for="${id}">${l}</label><input id="${id}" type="${t}" placeholder="${p}" ${t=="number"?'inputmode="decimal" step="0.01" min="0"':""}>`;
+const sel=(l,id,o)=>`<label for="${id}">${l}</label><select id="${id}">${o.map(x=>`<option>${x}</option>`).join("")}</select>`;
+const A={
+send:{t:"Send money",b:fld("Recipient name or email","a1","text","e.g. Amara Bello")+fld("Amount (₦)","a2","number","0.00"),s:"Send money",out:1,ic:"send",d:v=>"To "+v.a1},
+recv:{t:"Receive money",b:`<p style="color:var(--mu)">Share this demo payment ID to get paid.</p><div class="rc">zakpay.example/pay/amina-k</div>`+fld("Simulate an incoming payment (₦)","a2","number","0.00"),s:"Simulate payment",ic:"recv",d:()=>"From Demo Sender"},
+air:{t:"Buy airtime & data",b:sel("Network","a3",["Network A","Network B","Network C"])+fld("Phone number","a1","tel","e.g. 0800 000 0000")+fld("Amount (₦)","a2","number","0.00"),s:"Buy airtime",out:1,ic:"phone",d:v=>v.a3+" airtime"},
+bill:{t:"Pay a bill",b:sel("Category","a3",["Electricity","Water","TV subscription","Internet"])+fld("Account number","a1","text","e.g. 1234567890")+fld("Amount (₦)","a2","number","0.00"),s:"Pay bill",out:1,ic:"bill",d:v=>v.a3+" bill"}};
+let cur=null,mode=null;
+const dlg=$("#dlg");
+function open(k){cur=A[k];mode=null;$("#dt").textContent=cur.t;$("#dbody").innerHTML=cur.b;$("#ds").textContent=cur.s;$("#er").textContent="";dlg.showModal()}
+$$("[data-act]").forEach(b=>b.onclick=()=>open(b.dataset.act));
+$$("[data-auth]").forEach(a=>a.onclick=e=>{e.preventDefault();$("#nav").classList.remove("open");mode=a.dataset.auth;cur=null;const up=mode=="up";$("#dt").textContent=up?"Create your account":"Sign in";$("#dbody").innerHTML=(up?fld("Full name","u0","text","Your name"):"")+fld("Email","u1","email","you@example.com")+fld("Password","u2","password","At least 8 characters");$("#ds").textContent=up?"Create account":"Sign in";$("#er").textContent="";dlg.showModal()});
+$("#dx").onclick=()=>dlg.close();
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+$("#df").onsubmit=e=>{e.preventDefault();const er=$("#er");
+if(mode){const em=$("#u1").value.trim(),pw=$("#u2").value;
+if(!/^\S+@\S+\.\S+$/.test(em))return er.textContent="Enter a valid email address.";
+if(pw.length<8)return er.textContent="Password must be at least 8 characters.";
+if(mode=="up"&&!$("#u0").value.trim())return er.textContent="Enter your full name.";
+dlg.close();toast(mode=="up"?"Demo account created. Try the dashboard below.":"Signed in to the demo.");if(mode)location.hash="#dashboard";return}
+const v={};["a1","a2","a3"].forEach(i=>{const x=$("#"+i);if(x)v[i]=x.value.trim()});
+const amt=parseFloat(v.a2);
+if("a1" in v&&!v.a1)return er.textContent="Fill in all the details.";
+if(!(amt>0))return er.textContent="Enter an amount greater than 0.";
+if(cur.out&&amt>bal)return er.textContent="Amount is more than your balance of ₦"+bal.toLocaleString("en-US",{minimumFractionDigits:2})+".";
+bal+=cur.out?-amt:amt;
+tx.unshift([cur.ic,cur.d(v),"Just now",cur.out?-amt:amt]);
+dlg.close();draw();toast((cur.out?"Payment of ₦":"Received ₦")+amt.toLocaleString("en-US",{minimumFractionDigits:2})+(cur.out?" sent (demo).":" (demo)."))};
+draw();
+</script>
+</body>
+</html>
